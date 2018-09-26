@@ -123,9 +123,9 @@ export default class SegmentModule extends BasicModule {
     }
     try {
       if (params.userId) {
-        analytics.identify(params.userId, params.options);
+        analytics.identify(params.userId, params.traits, params.options);
       } else {
-        analytics.identify(params.options);
+        analytics.identify(params.traits, params.options);
       }
     } catch (e) {
       if (!(e instanceof ReferenceError)) {
