@@ -68,7 +68,9 @@ export default class SegmentModule extends BasicModule {
     }
     try {
       let fullProperties = Object.assign(properties, this.superProperties)
-      analytics.track(action, fullProperties);
+      let options = fullProperties.options
+      delete fullProperties.options
+      analytics.track(action, fullProperties, options);
     } catch (e) {
       if (!(e instanceof ReferenceError)) {
         throw e;
