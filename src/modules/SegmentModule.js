@@ -42,7 +42,9 @@ export default class SegmentModule extends BasicModule {
     }
     try {
       let fullProperties = Object.assign(properties, this.superProperties)
-      analytics.page(viewName, fullProperties)
+      let options = fullProperties.options
+      delete fullProperties.options
+      analytics.page(viewName, fullProperties, options)
     } catch (e) {
       if (!(e instanceof ReferenceError)) {
         throw e;
