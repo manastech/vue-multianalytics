@@ -2160,9 +2160,9 @@ module.exports =
 	            };
 	          };for (var t = 0; t < analytics.methods.length; t++) {
 	            var e = analytics.methods[t];analytics[e] = analytics.factory(e);
-	          }analytics.load = function (t) {
-	            var e = document.createElement("script");e.type = "text/javascript";e.setAttribute('defer', '');e.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";var n = document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e, n);
-	          };analytics.SNIPPET_VERSION = "4.0.0";
+	          }analytics.load = function (t, e) {
+	            var n = document.createElement("script");n.type = "text/javascript";n.async = !0;n.src = "https://cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js";var a = document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n, a);analytics._loadOptions = e;
+	          };analytics.SNIPPET_VERSION = "4.1.0";
 	        }
 	      })();
 
@@ -2201,7 +2201,9 @@ module.exports =
 	      }
 	      try {
 	        var fullProperties = _extends(properties, this.superProperties);
-	        analytics.page(viewName, properties);
+	        var options = fullProperties.options;
+	        delete fullProperties.options;
+	        analytics.page(viewName, fullProperties, options);
 	      } catch (e) {
 	        if (!(e instanceof ReferenceError)) {
 	          throw e;
@@ -2240,7 +2242,9 @@ module.exports =
 	      }
 	      try {
 	        var fullProperties = _extends(properties, this.superProperties);
-	        analytics.track(action, fullProperties);
+	        var options = fullProperties.options;
+	        delete fullProperties.options;
+	        analytics.track(action, fullProperties, options);
 	      } catch (e) {
 	        if (!(e instanceof ReferenceError)) {
 	          throw e;
@@ -2309,9 +2313,9 @@ module.exports =
 	      }
 	      try {
 	        if (params.userId) {
-	          analytics.identify(params.userId, params.options);
+	          analytics.identify(params.userId, params.traits, params.options);
 	        } else {
-	          analytics.identify(params.options);
+	          analytics.identify(params.traits, params.options);
 	        }
 	      } catch (e) {
 	        if (!(e instanceof ReferenceError)) {
